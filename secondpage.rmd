@@ -7,4 +7,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-back to index [index](Index.rmd)
+back to index [index](index.rmd)
