@@ -1,0 +1,10 @@
+---
+title: "anotherpage"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+back to index [index](Index.rmd)
