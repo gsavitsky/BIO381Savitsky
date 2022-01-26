@@ -9,6 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-Link to another page [another page](anotherpage.html)
+Link to another page [another page](secondpage.html)
 
 [Homework 2](Homework_02.html)
