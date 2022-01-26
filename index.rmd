@@ -1,0 +1,14 @@
+---
+title: "Index"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Link to another page [another page](secondpage.html)
+
+[Homework 2](Homework_02.html)
