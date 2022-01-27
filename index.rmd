@@ -1,5 +1,5 @@
 ---
-title: "Index"
+title: "Greta's Bio381 Website"
 output: html_document
 ---
 
@@ -7,6 +7,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Link to another page [another page](secondpage.html)
+
+
+Link to [another page](secondpage.html)
 
 [Homework 2](Homework_02.html)

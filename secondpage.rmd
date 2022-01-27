@@ -1,5 +1,5 @@
 ---
-title: "anotherpage"
+title: "Another Page"
 output: html_document
 ---
 
@@ -7,4 +7,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-back to index [index](index.html)
+back to [index](index.html)

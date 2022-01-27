@@ -1,5 +1,5 @@
 ---
-title: "Homework_02"
+title: "Homework 2"
 output: html_document
 ---
 
@@ -7,3 +7,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+back to [index](index.html)
