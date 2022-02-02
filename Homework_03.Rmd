@@ -1,0 +1,118 @@
+---
+title: "Homework 3"
+author: "Greta Savitsky"
+date: "2/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Question 1*
+
+First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124
+
+```
+Search: (\s+)(\h+)
+Replace: ,
+```
+
+First String, Second, 1.22, 3.4
+Second, More Text, 1.555555, 2.2220
+Third, x, 3, 124
+
+*Question 2*
+
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+
+```
+Search:(\w+)(\,)(\s)(\w+)(\,) (.+)
+Replace: \4\3\1\ (\6)
+```
+
+*Question 3*
+
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+
+```
+Search: (.mp3 )
+Replace: .mp3\r
+```
+
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+
+*Question 4*
+
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+
+```
+Search: (\d+)(\h)(\w.+)(.mp3)
+Replace: \3_\1\4
+```
+
+Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3
+
+*Question 5*
+
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+```
+Search: (\w)(\w+,)(\w+,)(\w+.\w,)(\w+)
+Replace: \1_\3,\5
+```
+
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+
+*Question 6*
+
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+```
+Search: (\w)(\w+,)(\w)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
+Replace: \1_\3\4\5\6,\9
+```
+
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+
+*Question 7*
+
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+```
+Search: (\w)(\w)(\w)(\w+,)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
+Replace: \1\2\3\5\6\7\, \9 \10
+```
+
+Campen, 10.2, 44
+Camher, 10.5, 3
+Myrpun, 12.2, 4
+Lasneo, 3.3, 55
