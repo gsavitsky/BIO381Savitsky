@@ -1,0 +1,38 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+In a \LaTex document, we use percentage sign to make comment
+%like this
+Fortunately \LaTex
+\section*{Main title}
+\subsection*{subtitle}
+\subsubsection*{sub-subtitle}
+
+\textbf{bold text}
+\emph{italic text}
+\texttt{typewriter text}
+``quote''
+
+\begin{itemize}
+  \item bullted list
+\end{itemize}
+
+\begin{enumerate}
+  \item numbered list
+\end{enumerate}
+
+\begin{description}
+  \item[descriptive text]
+\end{description}
+
+\begin{verbatim}
+verbatim text
+\end{verbatim}
+
+\begin{quote}
+block quote
+\end{quote}
+
+\end{document}
