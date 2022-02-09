@@ -1,0 +1,83 @@
+---
+title: "Homework 4"
+author: "Greta Savitsky"
+date: "2/9/2022"
+output: html_document
+---
+# Question 1
+x = 1.1
+a = 2.2
+b = 3.3
+
+z <- x**(a**b)
+print(z)
+
+z <- (x**a)**b
+print(z)
+
+z <- 3*x**3 + 2*x**2 + 1
+print(z)
+
+# Question 2
+a <- c(seq(1:8),rev(seq(1:7)))
+print(a)
+
+b <- c(1, rep(2, 2), rep(3,3), rep(4,4), rep(5,5))
+print(b)
+
+c <- c(5, rep(4, 2), rep(3,3), rep(2,4), rep(1,5))
+print(c)
+
+# Question 3
+
+a <- runif(2)
+x <- a[1]
+y <- a[2]
+
+r <-sqrt(x**2+y**2)
+theta <- atan(y/x)
+
+b <- c(r,theta)
+
+print(b)
+
+
+# Question 4
+
+queue <- c("sheep", "fox", "owl", "ant")
+print(queue)
+
+queue <- append(queue, "serpent")
+print(queue)
+
+queue <- queue[! queue %in% c("sheep")]
+print(queue)
+
+queue <- append(queue, "donkey", after=0)
+print(queue)
+
+queue <- queue[! queue %in% c("serpent")]
+print(queue)
+
+queue <- queue[! queue %in% c("owl")]
+print(queue)
+
+queue <- append(queue, "aphid", after=(match("ant",queue)-1))
+print(queue)
+
+answer <- match("aphid",queue)
+
+# Question 5
+vector <- (seq(from = 1, to = 100, by = 2))
+
+vector <- (vector[!vector%%7==0])
+
+vector <- (vector[!vector%%3==0])
+
+print(vector)
+
+
+
+
+
+
