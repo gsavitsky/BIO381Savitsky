@@ -1,0 +1,130 @@
+---
+title: "Homework 05"
+author: "Greta Savitsky"
+date: "2/16/2022"
+output: html_document
+---
+# Question 1
+
+### random integer between 3 and 10
+```
+n_dims <- as.integer(runif(1, 3, 10))
+
+print(n_dims)
+```
+### create a vector with n_dims dimensions
+```
+vector1 <- (1:n_dims**2)
+```
+### randomize
+```
+vector1_rand <- sample(vector1)
+```
+### create matrix
+```
+m <- matrix(data=vector1_rand,nrow=n_dims)
+
+print(m)
+```
+### transpose matrix
+```
+t_m <- t(m)
+
+print(t_m)
+```
+### sum and mean of first and last rows
+```
+sum(t_m[1,])
+
+sum(t_m[n_dims,])
+
+mean(t_m[1,])
+
+mean(t_m[n_dims,])
+```
+
+### Eigen values
+```
+e_m <- eigen(t_m, only.values = FALSE, EISPACK = FALSE)
+
+print(e_m)
+
+typeof(e_m$values)
+
+typeof(e_m$vectors)
+```
+# Question 2
+
+### create 4x4 matrix of random uniform values
+```
+my_matrix <- (runif(16))
+
+my_matrix <- matrix(data=my_matrix, nrow=4)
+```
+
+### create 100-element boolean vector
+```
+my_logical <- (runif(100))
+
+my_logical <- my_logical > 0.5
+```
+### create vector of randomized lower-case letters
+```
+my_letters <- letters[1:26]
+
+my_letters <- sample(my_letters)
+```
+### create a list with second element of all dfs
+```
+my_list <- list(my_matrix[2,2], my_logical[2], my_letters[2])
+```
+
+### find type of elements
+```
+typeof(my_matrix[2,2])
+
+typeof(my_logical[2])
+
+typeof(my_letters[2])
+```
+### find type of dataframe
+```
+my_vector2 <- c(my_matrix[2,2], my_logical[2], my_letters[2])
+typeof(my_vector2)
+```
+#### my_vector2 is a character vector
+
+# Question 3
+
+### create new dataframe with 26 random units and letters
+```
+my_units <- runif(26, 0, 10)
+
+my_letters <- LETTERS[1:26]
+
+my_letters <- sample(my_letters)
+
+my_data_frame <- data.frame(my_units,my_letters,stringsAsFactors=FALSE)
+```
+### sample four random rows and replace numerical values with NAs
+```
+my_data_frame[sample(nrow(my_data_frame), 4), 1] <- NA
+```
+### find NA values
+```
+which(is.na(my_data_frame$my_units))
+```
+### sort my_letters by alphibetical order
+```
+my_data_frame[order(my_data_frame$my_letters), ]
+
+my_data_frame
+```
+
+### get rid of NAs and find mean of my_units
+```
+df_clean <- my_data_frame$my_units[!is.na(my_data_frame$my_units)]
+
+mean(df_clean)
+```
+
