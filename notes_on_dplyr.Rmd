@@ -1,0 +1,110 @@
+---
+title: "Lab 7"
+author: "Greta Savitsky"
+date: "3/2/2022"
+output: html_document
+---
+
+### dplyr
+# new tool for manipulating data in R
+# past tidyverse package
+# fast!
+
+
+# core verbs
+# filter() pick or subset observations by their values (rows)
+# arrange() reordering the rows
+# select() choose variables (columns) by name
+# mutate() creating new variables with functions of existing variables
+# summarize() and group_by() collapses many values down to single summary
+
+library(tidyverse)
+library(dplyr)
+
+data(starwars)
+
+
+# tbl = tibble (modern take on data frames)
+glimpse(starwars)
+
+# complete cases to clean up data
+
+starwarsClean <- starwars[complete.cases(starwars[,1:10]),]
+
+glimpse(starwarsClean)
+
+is.na(starwarsClean)
+#are there any NAs in my data?
+anyNA(starwarsClean)
+
+head(starwarsClean)
+
+##############
+# filter() subset by rows
+# conditionals
+filter(starwarsClean, gender == "masculine" & height < 180)
+
+filter(starwarsClean, eyecolor %in% c("blue", "brown"))
+
+##############
+# arrange() rearranging rows
+
+arrange(starwarsClean, by=height) # ascending
+arrange(starwarsClean, by=desc(height)) # descending
+
+######
+# select() chooses variables by their names (columns)
+
+StarwarsClean[,1:10]
+select(StarwarsClean, 1:10)
+select(StarwarsClean, name:homeworld)
+select(StarwarsClean, !films:starwars) #not
+
+# rearrange columns
+
+select(starwarsClean, name, gender, species, everything())
+select(starwarsClean, contains("color"))
+
+select(starwarsClean, haircolor = hair_color, everything())
+
+##############
+# mutate()
+
+mutate(starwarsClean, ratio = height/mass)
+
+starwars_lbs <- mutate(starwarsClean, mass_lbs = mass*2.2)
+
+glimpse(starwars_lbs)
+
+select(starwars_lbs, 1:3, mass_lbs, everything())
+
+# transmute
+transmute(starwarsClean, mass_lbs = mass*2.2)
+
+#################
+# summarize and group_by()
+
+summarize(starwarsClean, meanHeight = mean(height), TotalN = n())
+
+summarize(starwars, meanHeight = mean(height, na.rm=T)) # can't work with NAs
+
+
+starwarsGenders <- group_by(starwars, gender)
+
+summarize(starwarsGenders, meanheight = mean(height, na.rm=T, N=n()))
+
+#############
+# piping
+
+starwarsClean %>%
+  group_by(gender) %>%
+  summarize(meanHeight=mean(height), number= n())
+
+# case_when() useful for multiple ifelse statements
+
+ifelse(starwarsClean$gender=="feminine", "F", "M")
+
+starwarsClean %>%
+mutate(sp = case_when(species == "Human" ~ "Humanoid", TRUE ~ "Non-human")) %>%
+
+  
