@@ -1,0 +1,125 @@
+---
+title: "Homework 7"
+author: "Greta Savitsky"
+date: "3/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## 1.
+```r
+str(iris)
+```
+```
+150 obs. of  5 variables
+```
+
+## 2.
+```r
+iris1 <-  filter(iris, Species %in% c("virginica", "versicolor") & Sepal.Length > 6 & Sepal.Width > 2.5)
+```
+```
+56 obs. of  5 variables
+```
+
+## 3.
+```r
+iris2 <- select(iris1, Species, Sepal.Length, Sepal.Width)
+```
+```
+56 obs. of  3 variables
+```
+
+## 4.
+```r
+iris3 <- arrange(iris2, by=desc(Sepal.Length))
+head(iris3, 6)
+```
+```
+    Species Sepal.Length Sepal.Width
+1 virginica          7.9         3.8
+2 virginica          7.7         3.8
+3 virginica          7.7         2.6
+4 virginica          7.7         2.8
+5 virginica          7.7         3.0
+6 virginica          7.6         3.0
+```
+
+## 5.
+```r
+iris4 <- mutate(iris3, Sepal.Area=Sepal.Length*Sepal.Width)
+```
+```
+56 obs. of  4 variables
+```
+
+## 6.
+```r
+iris5 <- summarize(iris4, meanLength = mean(Sepal.Length), meanWidth = mean(Sepal.Width), TotalN = n())
+```
+```
+  meanLength meanWidth TotalN
+1   6.698214  3.041071     56
+```
+
+## 7.
+```r
+iris_species <- group_by(iris4, Species)
+
+iris6 <- summarize(iris_species, meanLength = mean(Sepal.Length), meanWidth = mean(Sepal.Width), TotalN = n())
+
+print(iris6)
+```
+```
+  Species    meanLength meanWidth TotalN
+  <fct>           <dbl>     <dbl>  <int>
+1 versicolor       6.48      2.99     17
+2 virginica        6.79      3.06     39
+```
+
+## 8.
+```r
+iris7 <- iris %>%
+  filter(Species %in% c("virginica", 
+                              "versicolor") & 
+           Sepal.Length > 6 & Sepal.Width > 2.5) %>%
+  select(Species, Sepal.Length, Sepal.Width) %>%
+  arrange(by=desc(Sepal.Length)) %>%
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width)%>%
+  group_by(Species)%>%
+  summarize(meanLength = mean(Sepal.Length), meanWidth = mean(Sepal.Width), TotalN = n())
+```
+```
+  Species    meanLength meanWidth TotalN
+  <fct>           <dbl>     <dbl>  <int>
+1 versicolor       6.48      2.99     17
+2 virginica        6.79      3.06     39
+```
+## 9.
+```r
+wideIRIS <- iris %>% 
+  pivot_longer(
+    cols=Sepal.Length:Petal.Width,
+    names_to = "Measure",
+    values_to = "Value")
+
+wideIRIS
+```
+```
+  Species Measure      Value
+   <fct>   <chr>        <dbl>
+ 1 setosa  Sepal.Length   5.1
+ 2 setosa  Sepal.Width    3.5
+ 3 setosa  Petal.Length   1.4
+ 4 setosa  Petal.Width    0.2
+ 5 setosa  Sepal.Length   4.9
+ 6 setosa  Sepal.Width    3  
+ 7 setosa  Petal.Length   1.4
+ 8 setosa  Petal.Width    0.2
+ 9 setosa  Sepal.Length   4.7
+10 setosa  Sepal.Width    3.2
+```
