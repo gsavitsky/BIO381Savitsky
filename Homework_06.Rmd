@@ -14,6 +14,7 @@ library(MASS) # for maximum likelihood estimation
 #### read in data from desktop
 ```{r}
 z <- read.csv("~/Desktop/tair850-2010.csv")
+sd(complete.cases(z))
 z <- z[,2:3]
 z$number <- c(1:2400)
 str(z)
@@ -111,5 +112,15 @@ pSpecial + statSpecial
 ```
 
 ## normal distribution fit the data the best
+## new normal distribution
 ```{r}
+
+r <- rnorm(100,262,0.4670539)
+df_r <- as.data.frame(r)
+p7 <- ggplot(data=df_r, aes(x=r, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2)
+
+p7
+
+```
 
