@@ -1,0 +1,97 @@
+---
+title: "Homework_08"
+author: "Greta Savitsky"
+date: "3/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+install.packages("boot")
+library(boot)
+
+## Means and SDs from actual data
+```{r}
+# sd(wit$White.Oak) = 0.1629188
+# mean(wit$White.Oak) = 0.1364748
+# sd(fia$whiteOak) = 0.9191958
+# mean(fia$whiteOak) = 0.1752141
+```
+### Simulating Pre-Colonization data (n=1000)
+```{r}
+wit <- rnorm(n=2000, mean=0.136, sd=0.163)
+wit <- wit[wit >= 0]
+wit <- wit[1:1000]
+```
+### Simulating Post-Colonization data (n=1000)
+```{r}
+fia <- rnorm(n=3000, mean=0.175, sd=0.919)
+fia <- fia[fia >= 0]
+fia <- fia[fia <= 1]
+fia <- fia[1:1000]
+```
+```{r}
+par(mfrow=c(1,2))
+p1 <- hist(wit)
+p2 <- hist(fia)
+```
+
+### Paired T-test
+
+```{r}
+t.test(wit, fia, paired = TRUE, alternative = "two.sided")
+```
+
+# *Because the variance is so different between groups, means can be the same and still be significantly different*
+### Simulating Pre-Colonization data (n=1000)
+```{r}
+wit <- rnorm(n=2000, mean=0.136, sd=0.163)
+wit <- wit[wit >= 0]
+wit <- wit[1:1000]
+```
+### Simulating Post-Colonization data (n=1000)
+```{r}
+fia <- rnorm(n=3000, mean=0.136, sd=0.919)
+fia <- fia[fia >= 0]
+fia <- fia[fia <= 1]
+fia <- fia[1:1000]
+```
+```{r}
+par(mfrow=c(1,2))
+p1 <- hist(wit)
+p2 <- hist(fia)
+```
+
+## Paired T-test
+
+```{r}
+t.test(wit, fia, paired = TRUE, alternative = "two.sided")
+```
+# *n=15 was the lowest sample size to still be significant*
+### Simulating Pre-Colonization data (n=15)
+```{r}
+wit <- rnorm(n=2000, mean=0.136, sd=0.163)
+wit <- wit[wit >= 0]
+wit <- wit[1:15]
+```
+### Simulating Post-Colonization data (n=15)
+```{r}
+fia <- rnorm(n=3000, mean=0.175, sd=0.919)
+fia <- fia[fia >= 0]
+fia <- fia[fia <= 1]
+fia <- fia[1:15]
+```
+```{r}
+par(mfrow=c(1,2))
+p1 <- hist(wit)
+p2 <- hist(fia)
+```
+
+## Paired T-test
+
+```{r}
+t.test(wit, fia, paired = TRUE, alternative = "two.sided")
+```
+

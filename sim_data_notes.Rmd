@@ -1,0 +1,85 @@
+---
+title: "sim_data_notes"
+author: "Greta Savitsky"
+date: "3/16/2022"
+output: html_document
+---
+
+# part 1: normalling distributed data
+# start wtihg roups of dta
+# for t-tests or ANOVA
+
+# simulate groups with 20 observations
+group1 <- rnorm(n=20, mean=2, sd=1)
+p1 <- hist(group1)
+
+# change some parameters
+group2 <- rnorm(n=20, mean=5, sd=1)
+p2 <- hist(group2)
+
+group3 <- rnorm(n=20, mean=2, sd=3)
+p3 <- hist(group3)
+
+# sim data for linear regression
+# two continuous normal variables
+# assume intercept of 0
+# slope beta1
+# x is the predictor variable
+
+beta1 <- 1.5
+beta0 <- 2
+
+# predictor variable is norm
+x <- rnorm(n=20)
+y <- beta1*x + beta0
+
+# adding covariate
+# can draw from other distributions
+
+# part2: abundance/count data --------
+# option 1: data are normal-ish
+# use round() to remove decimals
+
+abund1 <- round(rnorm(n=20, mean=50, sd=10))
+hist(abund1)
+
+# option 2
+# poisson dist
+# small count
+
+abund2 <- rpois(n=20, lambda=3)
+barplot(table(abund2))
+
+# sometimes the environment affects counts
+# to account for that, first create out lambdas
+
+# use regression to get initial values
+pre.lambda <- beta0 + beta1*x
+# inverse log to make lambdas positive
+lambda <- exp(pre.lambda)
+
+# use created lambdas to get counts
+abund3 <- rpois(n=20, lambda=lambda)
+hist(abund3)
+
+# part 3: occupancy, presence/absence dta
+# similar to abundance data
+# option 1: getting probabilities from a beta distribution
+
+probs <- rbeta(n=20, shape1=1, shape2=1)
+occ1 <- rbinom(n=20, size=1, prob=probs)
+print(occ1)
+# option 2: occupancy with a covariate
+# similar to above, except we're generating probs, not lambdas
+
+pre.probs <- beta0 + beta1*x
+print(pre.probs)
+
+# convert to 0-1 scale
+psi <- inv.logit(pre.probs)
+psi
+
+# create new occ values
+
+occ2 <- rbinom(n=20, size=1, prob=psi)
+print(occ2)
