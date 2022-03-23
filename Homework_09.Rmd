@@ -1,0 +1,193 @@
+---
+title: "Homework_09"
+author: "Greta Savitsky"
+date: "3/23/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+library(boot)
+library(tidyverse)
+
+################################
+# FUNCTION: sim_wit
+# purpose: simulate witness tree data
+# input: sample size
+# output: wit data set of length 1000
+#-------------------- 
+```{r}
+sim_wit <- function(size=1000) {
+  wit <- rnorm(n=2000, mean=0.136, sd=0.163)
+  wit <- wit[wit >= 0]
+  wit <- wit[1:size]
+  return(wit)
+}
+```
+
+################################
+# FUNCTION: sim_fia
+# purpose: simulate FIA data
+# input: sample size
+# output: fia data set of length 1000
+#-------------------- 
+```{r}
+sim_fia <- function(size=1000) {
+  fia <- rnorm(n=3000, mean=0.175, sd=0.919)
+  fia <- fia[fia >= 0]
+  fia <- fia[fia <= 1]
+  fia <- fia[1:size]
+  return(fia)
+}
+```
+
+################################
+# FUNCTION: plot_sim
+# purpose: simulate FIA data
+# input: fia and wit
+# output: fia data set of length 1000
+#-------------------- 
+```{r}
+plot_sim <- function() {
+par(mfrow=c(1,2))
+p1 <- hist(wit)
+p2 <- hist(fia)
+}
+```
+
+################################
+# FUNCTION: p_t_test
+# purpose: paired t test between wit and fia data
+# input: fia and wit
+# output: p value
+#-------------------- 
+```{r}
+p_t_test <- function() {
+  test <- t.test(wit, fia, paired = TRUE, alternative = "two.sided")
+    return(test$p.value)
+}
+```
+#################################
+# Global variables
+#----------------------------------------------
+```{r}
+size <- 1000
+```
+#----------------------------------------------
+
+# Program body
+
+```{r}
+wit <- sim_wit()
+fia <- sim_fia()
+plot <- plot_sim()
+p_val <- p_t_test()
+```
+
+```{r}
+print(head(wit))
+print(head(fia))
+print(p_val)
+```
+
+# Changing std of simulated FIA data to same as Witness data
+
+################################
+# FUNCTION: sim_wit
+# purpose: simulate witness tree data
+# input: sample size
+# output: wit data set of length 1000
+#-------------------- 
+```{r}
+sim_wit <- function(size=1000) {
+  wit <- rnorm(n=2000, mean=0.136, sd=0.163)
+  wit <- wit[wit >= 0]
+  wit <- wit[1:size]
+  return(wit)
+}
+```
+
+################################
+# FUNCTION: sim_fia
+# purpose: simulate FIA data
+# input: sample size
+# output: fia data set of length 1000
+#-------------------- 
+```{r}
+sim_fia <- function(size=1000) {
+  fia <- rnorm(n=3000, mean=0.175, sd=0.163)
+  fia <- fia[fia >= 0]
+  fia <- fia[fia <= 1]
+  fia <- fia[1:size]
+  return(fia)
+}
+```
+
+################################
+# FUNCTION: plot_sim
+# purpose: simulate FIA data
+# input: fia and wit
+# output: fia data set of length 1000
+#-------------------- 
+```{r}
+plot_sim <- function() {
+par(mfrow=c(1,2))
+p1 <- hist(wit)
+p2 <- hist(fia)
+}
+```
+
+################################
+# FUNCTION: p_t_test
+# purpose: paired t test between wit and fia data
+# input: fia and wit
+# output: p value
+#-------------------- 
+```{r}
+p_t_test <- function() {
+  test <- t.test(wit, fia, paired = TRUE, alternative = "two.sided")
+    return(test$p.value)
+}
+```
+
+################################
+# FUNCTION: new_df
+# purpose: create a new dataframe combining witness and fia data
+# input: fia and wit
+# output: wit_fia
+#-------------------- 
+```{r}
+new_df <- function() {
+  wit_fia <- merge(wit,fia)
+    return(wit_fia)
+}
+```
+
+#################################
+# Global variables
+#----------------------------------------------
+```{r}
+size <- 1000
+```
+#----------------------------------------------
+
+# Program body
+
+```{r}
+wit <- sim_wit()
+fia <- sim_fia()
+plot <- plot_sim()
+p_val <- p_t_test()
+wit_fia <- new_df()
+```
+
+```{r}
+print(head(wit))
+print(head(fia))
+print(head(wit_fia))
+print(p_val)
+```
+# still significantly different, but less so
