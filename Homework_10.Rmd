@@ -1,0 +1,139 @@
+---
+title: "Homework_10"
+author: "Greta Savitsky"
+date: "3/30/2022"
+output: html_document
+---
+
+# 1.
+## set up numeric vector and counter
+```{r}
+counter <- 0
+vector <- as.integer(runif(100, max=5, min=-5))
+```
+## function to count zeros in numeric vector
+```{r}
+count_zeros <- function(x) {
+  for (i in 1:length(x)) {
+    if (x[i] == 0) {
+      counter <- counter + 1}
+  }
+  return(counter)
+}
+```
+## run code
+```{r}
+count_zeros(x=vector)
+```
+
+# 2.
+## subsetting instead of loop
+```{r}
+counter <- length(which(vector==0))
+print(counter)
+
+
+```
+
+# 3. 
+## creating a specified matrix
+
+################################
+# FUNCTION: create_matrix
+### purpose: create matrix with x*y dimensions in which each element is the product of the row number x the column number y
+### input: x, y
+### output:  matrix
+
+```{r}
+create_matrix <- function(x,y) {
+  mat <- matrix(sample(1:10, size = x*y),
+              nrow=x,
+              ncol=y)
+  for(i in 1:x) {
+    for(j in 1:y) {
+      (mat[i,j] <- i*j)
+    }
+  }
+  return(mat)
+}
+
+create_matrix(2,2)
+```
+
+# 4.
+## a.
+```{r}
+group1 <- data.frame(rnorm(50, mean=7, sd=1))
+colnames(group1) <- "group1"
+head(group1)
+
+group2 <- data.frame(rnorm(50, mean=17, sd=1))
+colnames(group2) <- "group2"
+head(group2)
+
+group3 <- data.frame(rnorm(50, mean=27, sd=1))
+colnames(group3) <- "group3"
+head(group3)
+
+library(tidyr)
+library(dplyr)
+
+BindGroups <- cbind(group1, group2, group3)
+head(BindGroups)
+
+BindGroups <- pivot_longer(BindGroups, cols=group1:group3, names_to = "group")
+head(BindGroups)
+```
+## b.
+# FUNCTION: shuffle_and_mean
+### purpose: shuffle values in dataframe and return means of each group
+### input: dataframe with groups and values
+### output: dataframe of means of shuffled groups
+```{r}
+shuffle_and_mean <- function(x) {
+  Shuffle <- transform(x, shuffled=sample(value))
+  group1 <- mean(Shuffle$shuffled[Shuffle$group=="group1"])
+  group2 <- mean(Shuffle$shuffled[Shuffle$group=="group2"])
+  group3 <- mean(Shuffle$shuffled[Shuffle$group=="group3"])
+  means <- cbind(group1,group2,group3)
+  return(means)
+}
+
+shuffle_and_mean(BindGroups)
+
+```
+## c.
+```{r}
+
+df <- data.frame()
+replicate <- c(1:100)
+
+for(i in 1:100) {
+  means <- shuffle_and_mean(BindGroups)
+  df <- rbind(df,means)
+}
+
+df <- cbind(replicate, df)
+
+head(df)
+```
+## d.
+```{r}
+
+library(ggplot2)
+library(ggpubr)
+
+p1<-ggplot(df, aes(x=group1)) + 
+  geom_histogram(color="black", fill="white")
+
+p2<-ggplot(df, aes(x=group2)) + 
+  geom_histogram(color="black", fill="white")
+
+p3<-ggplot(df, aes(x=group3)) + 
+  geom_histogram(color="black", fill="white")
+
+all_graphs <- ggarrange(p1, p2, p3,
+                        nrow = 1, ncol = 3)
+
+all_graphs
+```
