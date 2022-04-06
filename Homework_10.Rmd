@@ -137,3 +137,177 @@ all_graphs <- ggarrange(p1, p2, p3,
 
 all_graphs
 ```
+```{r}
+get_metric <- function(z=NULL) {
+                if(is.null(z)){
+                  x_obs <- 1:20
+                  y_obs <-  x_obs + 10*rnorm(20)
+                  z <- data.frame(x_obs,y_obs)} # set up data frame                 
+. <- lm(z[,2]~z[,1])
+. <- summary(.)
+. <- .$coefficients[2,1]
+
+slope <- .
+return(slope)
+}
+```
+```{r}
+read_data <- function(z=NULL) {
+  
+                if(is.null(z)){
+                  x_obs <- 1:20
+                  y_obs <- x_obs + 10*rnorm(20)
+                  df <- data.frame(x_obs,
+                                   y_obs)} else { 
+# set up data frame                 
+                  df <-read.table(file=z,
+                                   header=TRUE,
+                                   sep=",")}
+
+return(df)
+}
+```
+```{r}
+get_pval <- function(z=NULL) {
+                    if(is.null(z)){
+                      z <- list(x_obs=runif(1000),x_sim=runif(1000))}
+                      p_lower <- mean(z[[2]]<=z[[1]])
+                      p_upper <- mean(z[[2]]>=z[[1]])
+return(c(pl=p_lower,pu=p_upper))
+}
+```
+
+## extra p-value histogram
+```{r}
+trt_group <- c(rep("Control",4),
+                rep("Treatment",5))
+print(trt_group)
+
+# create response var
+z <- c(runif(4) + 1, runif(5) + 10)
+print(z)
+
+# combine into data frame
+df <- data.frame(trt=trt_group,res=z)
+print(df)
+
+# look at means in observed data
+obs <- tapply(df$res,df$trt,mean)
+print(obs)
+
+
+df_sim <- df
+
+# randomization
+
+df_sim$res <- sample(df_sim$res)
+print(df_sim)
+
+sim <- tapply(df_sim$res,df$trt,mean)
+print(sim)
+
+################################
+# FUNCTION: read_data
+# purpose: read in or generate data set
+# input: file name
+# output:  3 column data frame of observed data (x,y)
+#-------------------- 
+read_data <- function(steep=1, z=NULL) {
+  
+  if(is.null(z)){
+    x_obs <- 1:20
+    y_obs <- steep*x_obs + 10*rnorm(20)
+    df <- data.frame(x_obs,
+                     y_obs)} else {
+                       df <- read.table(file=z,
+                                        header=TRUE,
+                                        sep=",")}
+  return(df)
+
+}
+
+################################
+# FUNCTION: get_metric
+# purpose: 
+# input: 
+# output:  
+#-------------------- 
+get_metric <- function(z=NULL) {
+  if(is.null(z)){
+    x_obs <- 1:20
+    y_obs <-  x_obs + 10*rnorm(20)
+    z <- data.frame(x_obs,y_obs)} # set up data frame                 
+  . <- lm(z[,2]~z[,1])
+  . <- summary(.)
+  . <- .$coefficients[2,1]
+  
+  slope <- .
+  return(slope)
+}
+
+##################################################
+# function: shuffle_data
+# randomize data for regression analysis
+# input: 2-column data frame (x_var,y_var)
+# output: 2-column data frame (x_var,y_var)
+#------------------------------------------------- 
+shuffle_data <- function(z=NULL) {
+  if(is.null(z)){
+    x_obs <- 1:20
+    y_obs <- x_obs + 3*rnorm(20)
+    z <- data.frame(x_obs,y_obs)} # set up data frame                 
+  z[,2] <- sample(z[,2]) # use sample function with defaults to reshuffle column
+  
+  return(z)
+}
+
+##################################################
+# function: get_pval
+# calculate p value from simulation
+# input: list of observed metric, and vector of simulated metrics
+# output: lower, upper tail probability values
+#------------------------------------------------- 
+get_pval <- function(z=NULL) {
+  if(is.null(z)){
+    z <- list(x_obs=runif(1),x_sim=runif(1000))}
+  p_lower <- mean(z[[2]]<=z[[1]])
+  p_upper <- mean(z[[2]]>=z[[1]])
+  return(c(pl=p_lower,pu=p_upper))
+}
+
+##################################################
+# function: plot_ran_test
+# create ggplot of histogram of simulated values
+# input: list of observed metric and vector of simulated metrics
+# output: saved ggplot graph
+#------------------------------------------------- 
+plot_ran_test <- function(z=NULL) {
+  if(is.null(z)){
+    z <- list(rnorm(1),rnorm(1000)) }
+  df <- data.frame(ID=seq_along(z[[2]]),sim_x=z[[2]])
+  
+  p1 <- ggplot(data=df) + 
+    aes(x=sim_x)
+  
+  p1 + geom_histogram(aes(fill=I("goldenrod"),
+                          color=I("black"))) +
+    geom_vline(aes(xintercept=z[[1]],
+                   col="blue")) 
+  
+}
+library(ggplot2)
+# global variables
+n_sim <- 1000
+x_sim <- rep(NA,n_sim)
+# 
+df <- read_data(steep=2)
+x_obs <- get_metric(df)
+
+for (i in seq_len(n_sim)) {
+  x_sim[i] <- get_metric(shuffle_data(df))
+}
+
+slopes <- list(x_obs,x_sim)
+get_pval(slopes)
+plot_ran_test(slopes)
+```

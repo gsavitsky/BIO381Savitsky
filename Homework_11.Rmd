@@ -1,0 +1,139 @@
+---
+title: "Homework_11"
+author: "Greta Savitsky"
+date: "4/6/2022"
+output: html_document
+---
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE)
+```
+
+##################################################
+# function: file_builder
+# create a set of random files for regression
+# input: file_n = number of files to create
+#       : file_folder = name of folder for random files
+#       : file_size = c(min,max) number of rows in file
+#       : file_na = number on average of NA values per column
+# output: set of random files
+#------------------------------------------------- 
+```{r}
+file_builder <- function(file_n=10,
+                         file_folder="Homework11Files/",
+                         file_size=c(15,100),
+                         file_na=3){
+  for(i in seq_len(file_n)){
+    file_length <- sample(file_size[1]:file_size[2],
+                          size=1)
+    var_x <- rnorm(n=file_length, mean=0.7, sd=0.5) # create random x
+    var_y <- runif(file_length) # create random y
+    df <- data.frame(var_x,var_y) # bind into a dataframe
+    file_label <- paste(file_folder,
+                        "ranFile",
+                        formatC(i,
+                                width=3,
+                                format="d",
+                                flag="0"),
+                                ".csv",sep="")
+    # set up dta file and incorporate time stamp and minimal metadata
+    write.table(cat("# Simulated random data file for batch processing homework 11","\n",
+                    "# timestamp: ",as.character(Sys.time()),"\n",
+                    "# GLS","\n",
+                    "# --------------------", "\n",
+                    "\n",
+                    file=file_label,
+                    row.names="",
+                    col.names="",
+                    sep=""))
+    # now add the data frame
+    write.table(x=df,
+                file=file_label,
+                sep=",",
+                row.names=FALSE,
+                append=TRUE)
+  }
+}
+```
+## run a regression model
+
+##################################################
+# function: reg_stats
+# fits linear model, extracts statistics
+# input: 2-column data frame (x and y)
+# output: slope, p-value, and r2
+#------------------------------------------------- 
+```{r}
+reg_stats <- function(d=NULL){
+  if(is.null(d)){
+    x_var <- runif(10)
+    y_var <- runif(10)
+    d <- data.frame(x_var,y_var)
+  }
+  . <- lm(data=d,d[,2]~d[,1])
+  . <- summary(.)
+  stats_list <- list(slope=.$coefficients[2,1],
+                     p_val=.$coefficients[2,4],
+                     r2=.$r.squared)
+  return(stats_list)
+}
+```
+#--------------------------------------------
+# Global variables
+```{r}
+file_folder <- "Homework11Files/"
+n_files <- 100
+file_out <- "StatsSummary_Homework11.csv"
+```
+# create 100 random data sets
+```{r, results='hide'}
+dir.create(file_folder)
+file_builder(file_n=n_files)
+file_names <- list.files(path=file_folder)
+head(file_names)
+```
+# create dataframe to hold file summary stats
+```{r}
+ID <- seq_along(file_names)
+file_name <- file_names
+slope <- rep(NA,n_files)
+p_val <- rep(NA,n_files)
+r2 <- rep(NA,n_files)
+
+stats_out <- data.frame(ID,file_name,slope,p_val,r2)
+```
+# batch process by looping through inidividual files
+```{r}
+for(i in seq_along(file_names)) {
+  data <- read.table(file=paste(file_folder,file_names[i],sep=""),
+             sep=",",
+             header=TRUE) #read in next file
+  d_clean <- data[complete.cases(data),]
+  . <- reg_stats(d_clean) #regression stats from clean file
+  stats_out[i,3:5] <- unlist(.)
+}
+```
+# set up output file and incorporate time stamp and minimal metadata
+```{r}
+write.table(cat("# Summary stats for ",
+                "batch processing of regression models homework 11","\n",
+                "# timestamp: ",as.character(Sys.time()),"\n",
+                "# GLS","\n",
+                "# ------------------------", "\n",
+                "\n",
+                file=file_out,
+                row.names="",
+                col.names="",
+                sep=""))
+```
+# now add the data frame
+```{r}
+write.table(x=stats_out,
+            file=file_out,
+            row.names=FALSE,
+            col.names=TRUE,
+            sep=",",
+            append=TRUE)
+```
+```{r}
+hist(stats_out$p_val)
+```
