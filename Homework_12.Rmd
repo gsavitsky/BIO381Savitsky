@@ -1,0 +1,23 @@
+---
+title: "Homework 12"
+output:
+  html_document:
+    df_print: paged
+---
+```{r}
+library(ggplot2)
+setwd("~/Desktop/DS_project/")
+
+data <- read.csv("wit_climate_combined.csv")
+
+head(data)
+```
+```{r}
+ggplot(data, aes(x = tair_100, y = White.Oak)) + 
+  geom_point(shape=18) +
+  geom_smooth(color="dark green", fill="dark gray") +
+  xlab("100 year Average Temperature") +
+  ylab("Proportion White Oak") +
+  ggtitle("Proportion of White Oak Increases with Air Temperature") +
+  theme(plot.title = element_text(hjust = 0.5,size = 20, face = "bold"))
+```
