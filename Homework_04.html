@@ -173,41 +173,80 @@ pre code {
 
 <div id="question-1" class="section level1">
 <h1>Question 1</h1>
-<p>x = 1.1 a = 2.2 b = 3.3</p>
-<p>z &lt;- x<strong>(a</strong>b) print(z)</p>
-<p>z &lt;- (x<strong>a)</strong>b print(z)</p>
-<p>z &lt;- 3*x**3 + 2*x**2 + 1 print(z)</p>
+<pre class="r"><code>x = 1.1
+a = 2.2
+b = 3.3</code></pre>
+<pre class="r"><code>z &lt;- x**(a**b)
+print(z)</code></pre>
+<pre><code>## [1] 3.61714</code></pre>
+<pre class="r"><code>z &lt;- (x**a)**b
+print(z)</code></pre>
+<pre><code>## [1] 1.997611</code></pre>
+<pre class="r"><code>z &lt;- 3*x**3 + 2*x**2 + 1
+print(z)</code></pre>
+<pre><code>## [1] 7.413</code></pre>
 </div>
 <div id="question-2" class="section level1">
 <h1>Question 2</h1>
-<p>a &lt;- c(seq(1:8),rev(seq(1:7))) print(a)</p>
-<p>b &lt;- c(1, rep(2, 2), rep(3,3), rep(4,4), rep(5,5)) print(b)</p>
-<p>c &lt;- c(5, rep(4, 2), rep(3,3), rep(2,4), rep(1,5)) print(c)</p>
+<pre class="r"><code>a &lt;- c(seq(1:8),rev(seq(1:7)))
+print(a)</code></pre>
+<pre><code>##  [1] 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1</code></pre>
+<pre class="r"><code>b &lt;- c(1, rep(2, 2), rep(3,3), rep(4,4), rep(5,5))
+print(b)</code></pre>
+<pre><code>##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5</code></pre>
+<pre class="r"><code>c &lt;- c(5, rep(4, 2), rep(3,3), rep(2,4), rep(1,5))
+print(c)</code></pre>
+<pre><code>##  [1] 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
 </div>
 <div id="question-3" class="section level1">
 <h1>Question 3</h1>
-<p>a &lt;- runif(2) x &lt;- a[1] y &lt;- a[2]</p>
-<p>r &lt;-sqrt(x<strong>2+y</strong>2) theta &lt;- atan(y/x)</p>
-<p>b &lt;- c(r,theta)</p>
-<p>print(b)</p>
+<pre class="r"><code>a &lt;- runif(2)
+x &lt;- a[1]
+y &lt;- a[2]</code></pre>
+<pre class="r"><code>r &lt;-sqrt(x**2+y**2)
+theta &lt;- atan(y/x)
+
+b &lt;- c(r,theta)
+
+print(b)</code></pre>
+<pre><code>## [1] 0.9209608 0.8194027</code></pre>
 </div>
 <div id="question-4" class="section level1">
 <h1>Question 4</h1>
-<p>queue &lt;- c(“sheep”, “fox”, “owl”, “ant”) print(queue)</p>
-<p>queue &lt;- append(queue, “serpent”) print(queue)</p>
-<p>queue &lt;- queue[! queue %in% c(“sheep”)] print(queue)</p>
-<p>queue &lt;- append(queue, “donkey”, after=0) print(queue)</p>
-<p>queue &lt;- queue[! queue %in% c(“serpent”)] print(queue)</p>
-<p>queue &lt;- queue[! queue %in% c(“owl”)] print(queue)</p>
-<p>queue &lt;- append(queue, “aphid”, after=(match(“ant”,queue)-1)) print(queue)</p>
-<p>answer &lt;- match(“aphid”,queue)</p>
+<pre class="r"><code>queue &lt;- c(&quot;sheep&quot;, &quot;fox&quot;, &quot;owl&quot;, &quot;ant&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot; &quot;fox&quot;   &quot;owl&quot;   &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- append(queue, &quot;serpent&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot;   &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- queue[! queue %in% c(&quot;sheep&quot;)]
+print(queue)</code></pre>
+<pre><code>## [1] &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- append(queue, &quot;donkey&quot;, after=0)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot;  &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- queue[! queue %in% c(&quot;serpent&quot;)]
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;owl&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- queue[! queue %in% c(&quot;owl&quot;)]
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- append(queue, &quot;aphid&quot;, after=(match(&quot;ant&quot;,queue)-1))
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;aphid&quot;  &quot;ant&quot;</code></pre>
+<pre class="r"><code>answer &lt;- match(&quot;aphid&quot;,queue)</code></pre>
 </div>
 <div id="question-5" class="section level1">
 <h1>Question 5</h1>
-<p>vector &lt;- (seq(from = 1, to = 100, by = 2))</p>
-<p>vector &lt;- (vector[!vector%%7==0])</p>
-<p>vector &lt;- (vector[!vector%%3==0])</p>
-<p>print(vector)</p>
+<pre class="r"><code>vector &lt;- (seq(from = 1, to = 100, by = 2))
+
+vector &lt;- (vector[!vector%%7==0])
+
+vector &lt;- (vector[!vector%%3==0])
+
+print(vector)</code></pre>
+<pre><code>##  [1]  1  5 11 13 17 19 23 25 29 31 37 41 43 47 53 55 59 61 65 67 71 73 79 83 85
+## [26] 89 95 97</code></pre>
 </div>
 
 
