@@ -19,7 +19,7 @@ Third           x           3         124
 Search: (\s+)(\h+)
 Replace: ,
 ```
-
+### match space characters and replace with comma
 First String, Second, 1.22, 3.4
 Second, More Text, 1.555555, 2.2220
 Third, x, 3, 124
@@ -34,6 +34,7 @@ Record, Sydne, Bryn Mawr
 Search:(\w+)(\,)(\s)(\w+)(\,) (.+)
 Replace: \4\3\1\ (\6)
 ```
+### match word characters and following commas, match word characters, then reorder and add parenthases around 6th item
 
 *Question 3*
 
@@ -43,6 +44,7 @@ Replace: \4\3\1\ (\6)
 Search: (.mp3 )
 Replace: .mp3\r
 ```
+### match everything with ".mp3" and add line break
 
 0001 Georgia Horseshoe.mp3
 0002 Billy In The Lowground.mp3
@@ -60,6 +62,7 @@ Replace: .mp3\r
 Search: (\d+)(\h)(\w.+)(.mp3)
 Replace: \3_\1\4
 ```
+### match all digits, then white space, then following words, then ".mp3", and reorder
 
 Georgia Horseshoe_0001.mp3
 Billy In The Lowground_0002.mp3
@@ -77,6 +80,7 @@ Lasius,neoniger,3.3,55
 Search: (\w)(\w+,)(\w+,)(\w+.\w,)(\w+)
 Replace: \1_\3,\5
 ```
+### select first letter, then the rest of the word, then omit the rest of the word
 
 C_pennsylvanicus,44
 C_herculeanus,3
@@ -94,6 +98,7 @@ Lasius,neoniger,3.3,55
 Search: (\w)(\w+,)(\w)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
 Replace: \1_\3\4\5\6,\9
 ```
+### only grab first four letters of characters after underscore
 
 C_penn,44
 C_herc,3
@@ -111,6 +116,7 @@ Lasius,neoniger,3.3,55
 Search: (\w)(\w)(\w)(\w+,)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
 Replace: \1\2\3\5\6\7\, \9 \10
 ```
+### take first three letters of both words between commas, omit the rest
 
 Campen, 10.2, 44
 Camher, 10.5, 3

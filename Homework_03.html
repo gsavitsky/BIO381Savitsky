@@ -175,36 +175,57 @@ pre code {
 <p>First String Second 1.22 3.4 Second More Text 1.555555 2.2220 Third x 3 124</p>
 <pre><code>Search: (\s+)(\h+)
 Replace: ,</code></pre>
+<div id="match-space-characters-and-replace-with-comma" class="section level3">
+<h3>match space characters and replace with comma</h3>
 <p>First String, Second, 1.22, 3.4 Second, More Text, 1.555555, 2.2220 Third, x, 3, 124</p>
 <p><em>Question 2</em></p>
 <p>Ballif, Bryan, University of Vermont Ellison, Aaron, Harvard Forest Record, Sydne, Bryn Mawr</p>
 <pre><code>Search:(\w+)(\,)(\s)(\w+)(\,) (.+)
 Replace: \4\3\1\ (\6)</code></pre>
+</div>
+<div id="match-word-characters-and-following-commas-match-word-characters-then-reorder-and-add-parenthases-around-6th-item" class="section level3">
+<h3>match word characters and following commas, match word characters, then reorder and add parenthases around 6th item</h3>
 <p><em>Question 3</em></p>
 <p>0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3</p>
 <pre><code>Search: (.mp3 )
 Replace: .mp3\r</code></pre>
+</div>
+<div id="match-everything-with-.mp3-and-add-line-break" class="section level3">
+<h3>match everything with “.mp3” and add line break</h3>
 <p>0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3</p>
 <p><em>Question 4</em></p>
 <p>0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3</p>
 <pre><code>Search: (\d+)(\h)(\w.+)(.mp3)
 Replace: \3_\1\4</code></pre>
+</div>
+<div id="match-all-digits-then-white-space-then-following-words-then-.mp3-and-reorder" class="section level3">
+<h3>match all digits, then white space, then following words, then “.mp3”, and reorder</h3>
 <p>Georgia Horseshoe_0001.mp3 Billy In The Lowground_0002.mp3 Cherokee Shuffle_0003.mp3 Walking Cane_0004.mp3</p>
 <p><em>Question 5</em></p>
 <p>Camponotus,pennsylvanicus,10.2,44 Camponotus,herculeanus,10.5,3 Myrmica,punctiventris,12.2,4 Lasius,neoniger,3.3,55</p>
 <pre><code>Search: (\w)(\w+,)(\w+,)(\w+.\w,)(\w+)
 Replace: \1_\3,\5</code></pre>
+</div>
+<div id="select-first-letter-then-the-rest-of-the-word-then-omit-the-rest-of-the-word" class="section level3">
+<h3>select first letter, then the rest of the word, then omit the rest of the word</h3>
 <p>C_pennsylvanicus,44 C_herculeanus,3 M_punctiventris,4 L_neoniger,55</p>
 <p><em>Question 6</em></p>
 <p>Camponotus,pennsylvanicus,10.2,44 Camponotus,herculeanus,10.5,3 Myrmica,punctiventris,12.2,4 Lasius,neoniger,3.3,55</p>
 <pre><code>Search: (\w)(\w+,)(\w)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
 Replace: \1_\3\4\5\6,\9</code></pre>
+</div>
+<div id="only-grab-first-four-letters-of-characters-after-underscore" class="section level3">
+<h3>only grab first four letters of characters after underscore</h3>
 <p>C_penn,44 C_herc,3 M_punc,4 L_neon,55</p>
 <p><em>Question 7</em></p>
 <p>Camponotus,pennsylvanicus,10.2,44 Camponotus,herculeanus,10.5,3 Myrmica,punctiventris,12.2,4 Lasius,neoniger,3.3,55</p>
 <pre><code>Search: (\w)(\w)(\w)(\w+,)(\w)(\w)(\w)(\w+,)(\w+.\w,)(\w+)
 Replace: \1\2\3\5\6\7\, \9 \10</code></pre>
+</div>
+<div id="take-first-three-letters-of-both-words-between-commas-omit-the-rest" class="section level3">
+<h3>take first three letters of both words between commas, omit the rest</h3>
 <p>Campen, 10.2, 44 Camher, 10.5, 3 Myrpun, 12.2, 4 Lasneo, 3.3, 55</p>
+</div>
 
 
 
